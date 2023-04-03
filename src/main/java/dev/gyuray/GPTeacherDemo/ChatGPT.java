@@ -1,5 +1,6 @@
 package dev.gyuray.GPTeacherDemo;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,26 +14,38 @@ public class ChatGPT {
 
     private final String URL = "https://api.openai.com/v1/chat/completions";
     private final String API_KEY = "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";
+    // ChatGPT에게 보여줄 JSON 예제
+    private static final JSONObject EXAMPLE_SENTENCE1_JSON = new JSONObject()
+            .put("original", "I think there are many questions about travel at OPIc test.")
+            .put("corrected", "I think there are many questions about traveling on OPIc test.")
+            .put("explanation", "The word \"traveling\" should be changed to \"travel\" and \"at OPIc test\" should be \"on OPIc test.\"");
+
+    private static final JSONObject EXAMPLE_SENTENCE2_JSON = new JSONObject()
+            .put("original", "Long time did not see.")
+            .put("corrected", "Long time no see.")
+            .put("explanation", "\"Long time did not see.\" is not correct expression.");
+
+    private static JSONArray EXAMPLE_SENTENCE_JSON_ARRAY = new JSONArray()
+            .put(EXAMPLE_SENTENCE1_JSON)
+            .put(EXAMPLE_SENTENCE2_JSON);
 
     // ChatGPT에게 문장을 교정해달라고 요청하는 프롬프트
-    public static final String SPEAKING_INSTRUCTION =
-            "Provide me a corrected version of my speaking script in terms of grammar and clarity." +
-            "This is an script for a question that is given to me at an English speaking test like OPIc" +
-            "Don't append any unnecessary comment in your answer to corrected script." +
-            "Here it is : \n";
+    public static final String SPEAKING_INSTRUCTION_PREFIX =
+            "You are my English tutor. " +
+            "Please split my speaking script into individual sentences followed by corrected sentence and explanation. " +
+            "Here is the script : \n";
 
-    // ChatGPT에게 JSON 형식으로 보내달라고 요청할 때 예시 문자열로 전환하기 위한 JSON 객체
-    private static final JSONObject EXAMPLE_SENTENCE_JSON = new JSONObject()
-            .put("original", "I think there are so many questions about traveling at OPIC test.")
-            .put("corrected", "I think there are so many questions about traveling at OPIC test.")
-            .put("explanation", "The word \"traveling\" should be changed to \"travel\" and \"OPIC test\" should be \"OPIC test.\"");
+    public static final String SPEAKING_INSTRUCTION_SUFFIX =
+            "\nGive me the response as a string type that can be parsed into JSON array. " +
+            "Here is an example: \n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString() +
+            "Don't append any unnecessary comment except JSON array data.";
 
     // ChatGPT에게 스크립트를 문장별로 나눠달라고 요청하는 프롬프트
     public static final String SPLIT_INSTRUCTION =
             "Split the corrected of script into individual sentences with their original version" +
             "and explanation for each of them." +
             "Give me the response as a string that can be parsed into JSON without any additional comments. " +
-            "Here is an example for the format of answer I want to receive: \n" + EXAMPLE_SENTENCE_JSON.toString() +
+            "Here is an example for the format of answer I want to receive: \n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString() +
             "\n Original field have the sentence of my script," +
             "corrected field have the sentence of corrected script" +
             "and explanation field have the reason why the my sentence is corrected if any." +
