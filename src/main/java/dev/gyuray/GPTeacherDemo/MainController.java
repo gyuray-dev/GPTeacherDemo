@@ -29,11 +29,22 @@ public class MainController {
 
         List<JSONObject> messages = new ArrayList<>();
 
+        // 과거 이력 프롬프트에 추가 - 유저 스크립트
+        JSONObject priorPrompt = new JSONObject();
+        priorPrompt.put("role", "user");
+        priorPrompt.put("content", ChatGPT.SPEAKING_INSTRUCTION_PREFIX + ChatGPT.EXAMPLE_SCRIPT);
+        messages.add(priorPrompt);
+
+        // 과거 이력 프롬프트에 추가 - 교정 스크립트
+        JSONObject priorResponse = new JSONObject();
+        priorResponse.put("role", "assistant");
+        priorResponse.put("content", ChatGPT.EXAMPLE_SENTENCE_JSON_ARRAY.toString());
+        messages.add(priorResponse);
+
         // 교정 지시문 + 유저 스크립트 프롬프트 설정
         JSONObject message = new JSONObject();
         message.put("role", "user");
-        String prompt = ChatGPT.SPEAKING_INSTRUCTION_PREFIX + userScript;// + ChatGPT.SPEAKING_INSTRUCTION_SUFFIX;
-        System.out.println("prompt = " + prompt);
+        String prompt = ChatGPT.SPEAKING_INSTRUCTION_PREFIX + userScript;
         message.put("content", prompt);
         messages.add(message);
 
@@ -60,14 +71,14 @@ public class MainController {
         JSONObject priorPrompt = new JSONObject();
         priorPrompt.put("role", "user");
         String prompt = ChatGPT.SPEAKING_INSTRUCTION_PREFIX + userScript;
-        System.out.println("prompt = " + prompt);
+        System.out.println("prompt = " + ChatGPT.SPEAKING_INSTRUCTION_PREFIX);
         priorPrompt.put("content", prompt);
         messages.add(priorPrompt);
 
         // 과거 이력 프롬프트에 추가 - 교정 스크립트
         JSONObject priorResponse = new JSONObject();
         priorResponse.put("role", "assistant");
-        priorResponse.put("content", correctedScript);
+        priorResponse.put("content", ChatGPT.EXAMPLE_SENTENCE_JSON_ARRAY.toString());
         messages.add(priorResponse);
 
         // 스크립트 분할 지시 프롬프트에 추가
