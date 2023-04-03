@@ -38,11 +38,10 @@ public class ChatGPT {
 
     // ChatGPT에게 문장을 교정해달라고 요청하는 프롬프트
     public static final String SPEAKING_INSTRUCTION_PREFIX =
-            "Please split my speaking script into individual sentences followed by corrected sentence and explanation. " +
-            "Give me the JSON array data as you always do. " +
-            "Each JSON object has three attribute. \n" +
-                    "1. original: my original sentence. \n" +
-                    "2. corrected: your corrected sentence. \n" +
+            "Cut my speaking script by sentence followed by corrected one and explanation in JSON array. " +
+            "One JSON object has three attribute. \n" +
+                    "1. original: original sentence. \n" +
+                    "2. corrected: corrected sentence. \n" +
                     "3. explanation: explanation for correction. \n" +
             "Here is the script : \n";
 
