@@ -47,7 +47,7 @@ public class MainController {
 
     @PostMapping("/gpt/split")
     public String split(
-            @RequestParam String rawScript,
+            @RequestParam String userScript,
             @RequestParam String correctedScript,
             Model model
     ) throws IOException {
@@ -57,7 +57,7 @@ public class MainController {
         // 과거 이력 프롬프트에 추가 - 유저 스크립트
         JSONObject priorPrompt = new JSONObject();
         priorPrompt.put("role", "user");
-        priorPrompt.put("content", ChatGPT.SPEAKING_INSTRUCTION + rawScript);
+        priorPrompt.put("content", ChatGPT.SPEAKING_INSTRUCTION + userScript);
         messages.add(priorPrompt);
 
         // 과거 이력 프롬프트에 추가 - 교정 스크립트
@@ -88,7 +88,7 @@ public class MainController {
             e.printStackTrace();
         }
 
-        model.addAttribute("rawScript", rawScript);
+        model.addAttribute("userScript", userScript);
         model.addAttribute("correctedScript", correctedScript);
         model.addAttribute("splitScript", splitScript);
 
