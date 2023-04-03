@@ -16,14 +16,14 @@ public class ChatGPT {
     private final String API_KEY = "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";
     // ChatGPT에게 보여줄 JSON 예제
     private static final JSONObject EXAMPLE_SENTENCE1_JSON = new JSONObject()
-            .put("original", "I think there are many questions about travel at OPIc test.")
-            .put("corrected", "I think there are many questions about traveling on OPIc test.")
-            .put("explanation", "The word \"traveling\" should be changed to \"travel\" and \"at OPIc test\" should be \"on OPIc test.\"");
+            .put("original", "original sentence1")
+            .put("corrected", "corrected sentence1")
+            .put("explanation", "explanation1");
 
     private static final JSONObject EXAMPLE_SENTENCE2_JSON = new JSONObject()
-            .put("original", "Long time did not see.")
-            .put("corrected", "Long time no see.")
-            .put("explanation", "\"Long time did not see.\" is not correct expression.");
+            .put("original", "original sentence2")
+            .put("corrected", "corrected sentence2")
+            .put("explanation", "explanation2");
 
     private static JSONArray EXAMPLE_SENTENCE_JSON_ARRAY = new JSONArray()
             .put(EXAMPLE_SENTENCE1_JSON)
@@ -36,20 +36,15 @@ public class ChatGPT {
             "Here is the script : \n";
 
     public static final String SPEAKING_INSTRUCTION_SUFFIX =
-            "\nGive me the response as a string type that can be parsed into JSON array. " +
-            "Here is an example: \n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString() +
-            "Don't append any unnecessary comment except JSON array data.";
+            "Here is an example: \n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString();
 
     // ChatGPT에게 스크립트를 문장별로 나눠달라고 요청하는 프롬프트
     public static final String SPLIT_INSTRUCTION =
-            "Split the corrected of script into individual sentences with their original version" +
-            "and explanation for each of them." +
-            "Give me the response as a string that can be parsed into JSON without any additional comments. " +
-            "Here is an example for the format of answer I want to receive: \n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString() +
-            "\n Original field have the sentence of my script," +
-            "corrected field have the sentence of corrected script" +
-            "and explanation field have the reason why the my sentence is corrected if any." +
-            "If there is no correction for the sentence, write \"No correction\" in explanation field.";
+            "1. Give me the response as a string type that can be parsed into JSON array with multiple JSON object. \n" +
+            "2. One JSON object represents just only one sentence. " +
+            "3. There must be as many JSON objects as there are sentences. " +
+            "4. Do not append any unnecessary comments. " +
+            "Here is an example of response format if there is two sentence: \n\n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString();
 
     public String chat(List<JSONObject> messages) throws IOException {
 

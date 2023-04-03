@@ -59,7 +59,9 @@ public class MainController {
         // 과거 이력 프롬프트에 추가 - 유저 스크립트
         JSONObject priorPrompt = new JSONObject();
         priorPrompt.put("role", "user");
-        priorPrompt.put("content", ChatGPT.SPEAKING_INSTRUCTION_PREFIX + userScript);
+        String prompt = ChatGPT.SPEAKING_INSTRUCTION_PREFIX + userScript;
+        System.out.println("prompt = " + prompt);
+        priorPrompt.put("content", prompt);
         messages.add(priorPrompt);
 
         // 과거 이력 프롬프트에 추가 - 교정 스크립트
