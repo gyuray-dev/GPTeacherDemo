@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenAI pronunciation</title>
+</head>
+<body onload="init()">
+<h1>pronunciation</h1>
+ETRI API가 불안정하여 자주 실패함. 실패 시 재시작 필요.
+<br>
+<button id="record">녹음 시작</button>
+<button id="stop">녹음 중지</button>
+<br>
+<br>
+<textarea rows="10" cols="100" id="textarea"></textarea>
+
+<!-- Recorder.js (for wav file export)-->
+<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+<script>
+    let recorder;
+    let recordButton = document.querySelector("#record");
+    let stopButton = document.querySelector("#stop");
+    stopButton.disabled = true;
+
+    function init() {
+        if (navigator.mediaDevices) {
+            navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {
+                let audioContext = new AudioContext();
+                let input = audioContext.createMediaStreamSource(stream);
+                recorder = new Recorder(input);
+
+                recordButton.onclick = () => {
+                    recorder && recorder.record();
+
+                    recordButton.style.backgroundColor = "red";
+                    recordButton.style.color = "white";
+                    recordButton.disabled = true;
+                    stopButton.disabled = false;
+                }
+
+                stopButton.onclick = () => {
+                    recorder && recorder.stop();
+                    recordButton.style.backgroundColor = "";
+                    stopButton.disabled = true;
+                    recordButton.disabled = true;
+                    sendToServer();
+                    recorder.clear();
+                }
+
+            }).catch(err => {
+                console.log(err);
+            });
+        } else {
+            console.log("미디어 장치 없음");
+        }
+    }
+
+    function sendToServer() {
+        // wav 파일로 전송
+        recorder && recorder.exportWAV(function (blob) {
+            // 서버로 전송
+            let formData = new FormData();
+            formData.append("audio", blob);
+            ajax(formData);
+        });
+    }
+
+    function ajax(formData) {
+        let request = new XMLHttpRequest();
+
+        request.onload = () => {
+            let responseText = request.responseText;
+            console.log(responseText);
+            document.querySelector('#textarea').innerText = responseText;
+
+            recordButton.style.color = "";
+            recordButton.disabled = false;
+        }
+
+        request.open("POST", "/etri/pronunciation", true);
+        request.send(formData);
+    }
+</script>
+</body>
+</html>

@@ -1,40 +1,12 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Document</title>
+    <title>Title</title>
 </head>
 <body>
-
-
-
-<form action="/gpt/correction" method="post">
-    유저 원문:<br>
-    <textarea rows="10" cols="100" type="text" name="userScript"></textarea>
-
-    <input type="submit">
-</form>
-<br><br>
-<form action="/gpt/split" method="post">
-    유저 원문:<br>
-    <textarea rows="10" cols="100" type="text" name="userScript" th:text="${userScript}"></textarea><br>
-    ChatGPT 교정문:<br>
-    <textarea rows="10" cols="100" type="text" name="correctedScript" th:text="${correctedScript}"></textarea>
-
-    <input type="submit">
-</form>
-<br>
-문장별 교정 내용:<br>
-<ol>
-    <li th:each="script : ${splitScript}" >
-        <strong>original:</strong> <span th:text="${script.get('original')}"></span><br>
-        <strong>corrected:</strong> <span th:text="${script.get('corrected')}"></span><br>
-        <strong>explanation:</strong> <span th:text="${script.get('explanation')}"></span><br>
-    </li>
-    <br>
-</ol>
-
+<a href="/gpt/correction">교정받기</a>
+<a href="/gpt/whisper">음성인식</a>
+<a href="/etri/pronunciation">발음평가</a>
 </body>
 </html>

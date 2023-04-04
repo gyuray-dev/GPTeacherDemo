@@ -1,4 +1,4 @@
-package dev.gyuray.GPTeacherDemo;
+package dev.gyuray.gpteacherdemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
