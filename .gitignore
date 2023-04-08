@@ -40,4 +40,6 @@ out/
 api.properties
 
 ##upload files
-src/main/resources/static/files/*
+*.wav
+*.webm
+*.pcm
