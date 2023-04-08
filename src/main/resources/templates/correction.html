@@ -15,7 +15,7 @@
 
 <form action="/gpt/correction" method="post">
     유저 원문:<br>
-    <textarea rows="10" cols="100" type="text" name="userScript" th:text="${userScript}"></textarea>
+    <textarea rows="10" cols="100" name="userScript" th:text="${userScript}"></textarea>
 
     <input type="submit">
 </form>
@@ -27,7 +27,6 @@
         <strong>corrected:</strong> <span th:text="${script.get('corrected')}"></span><br>
         <strong>explanation:</strong> <span th:text="${script.get('explanation')}"></span><br>
     </li>
-    <br>
 </ol>
 
 </body>
