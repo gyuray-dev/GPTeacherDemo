@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ##api key
-##api.properties
+api.properties
 
 ##upload files
 src/main/resources/static/files/*
