@@ -55,14 +55,6 @@ public class OpenAi {
                     "3. explanation: explanation for correction. \n" +
                     "Here is the script : \n";
 
-    // ChatGPT에게 스크립트를 문장별로 나눠달라고 요청하는 프롬프트
-    public static final String SPLIT_INSTRUCTION =
-            "1. Give me the response as a string type that can be parsed into JSON with multiple JSON object. \n" +
-                    "2. One JSON object represents just only one sentence. " +
-                    "3. There must be as many JSON objects as there are sentences. " +
-                    "4. Do not append any unnecessary comments. " +
-                    "Here is an example of response format if there is two sentence: \n\n" + EXAMPLE_SENTENCE_JSON_ARRAY.toString();
-
     public String chat(List<JSONObject> messages) throws IOException {
 
         // HTTP 통신 설정
